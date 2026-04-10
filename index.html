@@ -1,706 +1,642 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oussama Achraf — Business & Functional Analyst</title>
-
-  <!-- 
-    - favicon
-  -->
+  <title>Oussama Achraf</title>
   <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
-
-  <!-- 
-    - custom css link
-  -->
-  <link rel="stylesheet" href="./assets/css/style.css">
-
-  <!-- 
-    - google font link
-  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Roboto:wght@400;700&family=Saira+Stencil+One&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg:       #fafaf8;
+      --text:     #1a1a1a;
+      --muted:    #6b6b6b;
+      --faint:    #b0b0a8;
+      --border:   #e2e2dc;
+      --surface:  #f2f2ee;
+      --serif:    'Lora', Georgia, serif;
+      --sans:     'Inter', system-ui, sans-serif;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 400;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+
+    nav {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .nav-name {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ─── LAYOUT ──────────────────────────────────────── */
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 96px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    #home {
+      border-top: none;
+      padding-top: 128px;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 48px;
+    }
+
+    /* ─── HERO ────────────────────────────────────────── */
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(2.75rem, 7vw, 4.25rem);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      margin-bottom: 36px;
+    }
+
+    .hero-bio {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 540px;
+    }
+
+    .hero-bio em {
+      color: var(--text);
+      font-style: italic;
+      font-family: var(--serif);
+    }
+
+    .hero-cta {
+      margin-top: 44px;
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--bg);
+      background: var(--text);
+      padding: 11px 24px;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .btn-primary:hover { opacity: 0.75; }
+
+    .btn-ghost {
+      font-size: 0.875rem;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: var(--text);
+    }
+
+    /* ─── WORK ────────────────────────────────────────── */
+
+    .work-list { list-style: none; }
+
+    .work-item { border-top: 1px solid var(--border); }
+
+    .work-item:last-child { border-bottom: 1px solid var(--border); }
+
+    .work-toggle {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 26px 0;
+      display: grid;
+      grid-template-columns: 1fr 28px;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .work-toggle:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
+
+    .work-title {
+      font-family: var(--serif);
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: var(--text);
+      display: block;
+      line-height: 1.3;
+      margin-bottom: 5px;
+    }
+
+    .work-sub {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .work-tag {
+      background: var(--surface);
+      padding: 2px 8px;
+      border-radius: 2px;
+      font-size: 0.75rem;
+      color: var(--faint);
+    }
+
+    .work-icon {
+      display: grid;
+      place-items: center;
+      color: var(--faint);
+      transition: transform 0.3s ease, color 0.2s;
+    }
+
+    .work-item.open .work-icon {
+      transform: rotate(45deg);
+      color: var(--text);
+    }
+
+    .work-body {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s ease;
+    }
+
+    .work-body-inner {
+      padding-bottom: 32px;
+      max-width: 560px;
+    }
+
+    .work-body-inner p {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+
+    .work-highlights {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .work-highlights li {
+      font-size: 0.875rem;
+      color: var(--muted);
+      padding-left: 18px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .work-highlights li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--border);
+    }
+
+    /* ─── PROJECTS ────────────────────────────────────── */
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border-radius: 6px;
+      padding: 28px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 150px;
+    }
+
+    .project-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--border);
+      font-weight: 500;
+    }
+
+    .project-title {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--faint);
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .project-status {
+      margin-top: auto;
+      font-size: 0.8125rem;
+      color: var(--border);
+    }
+
+    /* ─── ABOUT ───────────────────────────────────────── */
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .about-bio p {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 18px;
+    }
+
+    .about-bio p:last-child { margin-bottom: 0; }
+
+    .about-sidebar-block { margin-bottom: 36px; }
+
+    .about-sidebar-block:last-child { margin-bottom: 0; }
+
+    .sidebar-heading {
+      font-family: var(--serif);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    .skill-list, .lang-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .skill-list li {
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    .lang-list li {
+      font-size: 0.875rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .lang-list li span {
+      color: var(--faint);
+      font-size: 0.8125rem;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+
+    footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 36px 24px 60px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: var(--serif);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    /* ─── RESPONSIVE ──────────────────────────────────── */
+
+    @media (max-width: 640px) {
+      nav {
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      #home { padding-top: 80px; }
+
+      .hero-cta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+    }
+  </style>
 </head>
+<body>
 
-<body id="top" class="dark_theme">
-
-  <!-- 
-    - #HEADER
-  -->
-
-  <header class="header" data-header>
-    <div class="container">
-
-      <h1 class="h1 logo">
-        <a href="#">Sum<span>.</span></a>
-      </h1>
-
-      <div class="navbar-actions">
-
-        <select name="language" id="lang">
-          <option value="en">En</option>
-          <option value="ar">Ar</option>
-        </select>
-
-        <button class="theme-btn" aria-label="Change Theme" title="Change Theme" data-theme-btn>
-          <span class="icon"></span>
-        </button>
-
-      </div>
-
-      <button class="nav-toggle-btn" aria-label="Toggle Menu" title="Toggle Menu" data-nav-toggle-btn>
-        <span class="one"></span>
-        <span class="two"></span>
-        <span class="three"></span>
-      </button>
-
-      <nav class="navbar" data-navbar>
-        <ul class="navbar-list">
-
-          <li>
-            <a href="#home" class="navbar-link">Home.</a>
-          </li>
-
-          <li>
-            <a href="#about" class="navbar-link">About.</a>
-          </li>
-
-          <li>
-            <a href="#skills" class="navbar-link">Skills.</a>
-          </li>
-
-          <li>
-            <a href="#portfolio" class="navbar-link">Portfolio.</a>
-          </li>
-
-          <li>
-            <a href="#contact" class="navbar-link">Contact.</a>
-          </li>
-
-        </ul>
-      </nav>
-
-    </div>
-  </header>
-
-
-
-
+  <nav>
+    <a href="#home" class="nav-name">Oussama Achraf</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="mailto:achraafoussama@gmail.com">Contact</a></li>
+    </ul>
+  </nav>
 
   <main>
-    <article class="container">
 
-      <!-- 
-        - #HERO
-      -->
+    <!-- HERO -->
+    <section id="home">
+      <h1 class="hero-name">Oussama<br>Achraf</h1>
+      <p class="hero-bio">I'm Oussama Achraf — an aspiring analyst based in Belgium. I've always been more interested in <em>how things actually work</em> than how they're supposed to, and I tend to notice the details others move past.</p>
+      <div class="hero-cta">
+        <a href="#work" class="btn-primary">See my work</a>
+        <a href="mailto:achraafoussama@gmail.com" class="btn-ghost">Get in touch</a>
+      </div>
+    </section>
 
-      <section class="hero" id="home">
+    <!-- WORK -->
+    <section id="work">
+      <p class="section-label">Work</p>
+      <ul class="work-list">
 
-        <figure class="hero-banner">
-
-          <picture>
-            <source srcset="./assets/images/hero-banner.png" media="(min-width: 768px)">
-            <source srcset="./assets/images/hero-banner-md.png" media="(min-width: 500px)">
-            <img src="./assets/images/hero-banner-sm.png" alt="A man in a blue shirt with a happy expression"
-              class="w-100">
-          </picture>
-
-        </figure>
-
-        <div class="hero-content">
-
-          <h2 class="h2 hero-title">Turning Business Complexity into Clear, Actionable Insights.</h2>
-
-          <a href="#contact" class="btn btn-primary">Get in touch</a>
-
-        </div>
-
-        <ul class="hero-social-list">
-
-          <li>
-            <a href="#" class="hero-social-link">
-              <ion-icon name="logo-facebook"></ion-icon>
-
-              <div class="tooltip">Facebook</div>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="hero-social-link">
-              <ion-icon name="logo-twitter"></ion-icon>
-
-              <div class="tooltip">Twitter</div>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="hero-social-link">
-              <ion-icon name="logo-linkedin"></ion-icon>
-
-              <div class="tooltip">Linkedin</div>
-            </a>
-          </li>
-
-        </ul>
-
-        <a href="#stats" class="scroll-down">Scroll</a>
-
-      </section>
-
-
-
-
-
-      <!-- 
-        - #STATS
-      -->
-
-      <section class="stats" id="stats">
-        <ul class="stats-list">
-
-          <li>
-            <a href="#" class="stats-card">
-
-              <div class="card-icon">
-                <img src="./assets/images/stats-card_icon-1.png" alt="Badge icon">
+        <li class="work-item">
+          <button class="work-toggle" aria-expanded="false">
+            <div>
+              <span class="work-title">Business Process Analysis &amp; BI Reporting</span>
+              <div class="work-sub">
+                <span>2023 – Present</span>
+                <span class="work-tag">Functional Analysis</span>
               </div>
-
-              <h2 class="h2 card-title">
-                1+ <strong>Years of Experience</strong>
-              </h2>
-
-              <ion-icon name="chevron-forward-outline"></ion-icon>
-
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="stats-card">
-
-              <div class="card-icon">
-                <img src="./assets/images/stats-card_icon-2.png" alt="Checkmark icon">
-              </div>
-
-              <h2 class="h2 card-title">
-                1+ <strong>Completed Projects</strong>
-              </h2>
-
-              <ion-icon name="chevron-forward-outline"></ion-icon>
-
-            </a>
-
-        </ul>
-      </section>
-
-
-
-
-
-      <!-- 
-        - #ABOUT
-      -->
-
-      <section class="about" id="about">
-
-        <figure class="about-banner">
-          <img src="./assets/images/about-banner.png" alt="A man in a alice blue shirt with a thinking expression"
-            class="w-100">
-        </figure>
-
-        <div class="about-content section-content">
-
-          <p class="section-subtitle">About me</p>
-
-          <h2 class="h3 section-title">Bridging Business Needs &amp; Data-Driven Solutions</h2>
-
-          <p class="section-text">
-            Hi! I’m Oussama Achraf, a Business &amp; Functional Analyst based in Belgium. I specialize in translating
-            complex business requirements into clear functional specifications and actionable insights. With hands-on
-            experience in requirements gathering, stakeholder management, and BI reporting, I help organizations make
-            smarter decisions through structured analysis and meaningful data visualization.
-          </p>
-
-          <p class="section-text">
-            I work closely with cross-functional teams to model business processes (BPMN), design Power BI dashboards,
-            and support SAP Fiori implementations. I’m fluent in French, Arabic, English, and Dutch — which helps me
-            collaborate effectively across diverse, international environments.
-          </p>
-
-          <div class="btn-group">
-            <button class="btn btn-secondary">Hire me</button>
-
-            <button class="btn btn-primary">Download cv</button>
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-
-
-      <!-- 
-        - #SKILLS
-      -->
-
-      <section class="skills" id="skills">
-
-        <div class="skills-content section-content">
-
-          <p class="section-subtitle">My skills</p>
-
-          <h2 class="h3 section-title">Core Competencies &amp; Tools</h2>
-
-          <p class="section-text">
-            From requirements workshops to BI dashboards, I bring a structured, analytical approach to every project —
-            combining domain knowledge with the right tools to deliver value to stakeholders.
-          </p>
-
-          <div class="skills-toggle" data-toggle-box>
-            <button class="toggle-btn active" data-toggle-btn>Skills</button>
-
-            <button class="toggle-btn" data-toggle-btn>Tools</button>
-          </div>
-
-        </div>
-
-        <div class="skills-box" data-skills-box>
-
-          <ul class="skills-list">
-
-            <li>
-              <div class="skill-card">
-                <div class="tooltip">Power BI</div>
-
-                <div class="card-icon" style="display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:inherit;">
-                  PBI
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <div class="skill-card">
-                <div class="tooltip">SQL</div>
-
-                <div class="card-icon" style="display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:inherit;">
-                  SQL
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <div class="skill-card">
-                <div class="tooltip">Excel</div>
-
-                <div class="card-icon" style="display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:inherit;">
-                  XLS
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <div class="skill-card">
-                <div class="tooltip">BPMN</div>
-
-                <div class="card-icon" style="display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:inherit;">
-                  BPMN
-                </div>
-              </div>
-            </li>
-
-          </ul>
-
-          <ul class="tools-list">
-
-            <li>
-              <div class="skill-card">
-                <div class="tooltip">SAP Fiori</div>
-
-                <div class="card-icon" style="display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:inherit;">
-                  SAP
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <div class="skill-card">
-                <div class="tooltip">Trello</div>
-
-                <div class="card-icon">
-                  <img src="./assets/images/trello.png" alt="Trello logo">
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <div class="skill-card">
-                <div class="tooltip">Slack</div>
-
-                <div class="card-icon">
-                  <img src="./assets/images/slack.png" alt="Slack logo">
-                </div>
-              </div>
-            </li>
-
-          </ul>
-
-        </div>
-
-      </section>
-
-
-
-
-
-      <!-- 
-        - #PROJECTS
-      -->
-
-      <section class="project" id="portfolio">
-
-        <ul class="project-list">
-
-          <li>
-            <div class="project-content section-content">
-
-              <p class="section-subtitle">My Works</p>
-
-              <h2 class="h3 section-title">Selected Projects &amp; Case Studies</h2>
-
-              <p class="section-text">
-                A curated selection of analysis and reporting projects — from requirements documentation to Power BI
-                dashboards and process modeling. More coming soon.
-              </p>
-
             </div>
-          </li>
-
-          <li>
-            <a href="#" class="project-card">
-
-              <figure class="card-banner">
-                <img src="./assets/images/project-1.png" class="w-100" alt="A macintosh on a yellow background.">
-              </figure>
-
-              <div class="card-content">
-                <h3 class="h4 card-title">Coming Soon — Project 01</h3>
-
-                <time class="publish-date" datetime="2022-04">April 2022</time>
-              </div>
-
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="project-card">
-
-              <figure class="card-banner">
-                <img src="./assets/images/project-2.png" class="w-100" alt="On a Blue background, a Wacom and a mouse.">
-              </figure>
-
-              <div class="card-content">
-                <h3 class="h4 card-title">Coming Soon — Project 02</h3>
-
-                <time class="publish-date" datetime="2022-04">April 2022</time>
-              </div>
-
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="project-card">
-
-              <figure class="card-banner">
-                <img src="./assets/images/project-3.png" class="w-100"
-                  alt="A Cassette tape on a mellow apricot background.">
-              </figure>
-
-              <div class="card-content">
-                <h3 class="h4 card-title">Coming Soon — Project 03</h3>
-
-                <time class="publish-date" datetime="2022-04">April 2022</time>
-              </div>
-
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="project-card">
-
-              <figure class="card-banner">
-                <img src="./assets/images/project-4.png" class="w-100"
-                  alt="Blue digital watch on a dark liver background.">
-              </figure>
-
-              <div class="card-content">
-                <h3 class="h4 card-title">Coming Soon — Project 04</h3>
-
-                <time class="publish-date" datetime="2022-04">April 2022</time>
-              </div>
-
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="project-card">
-
-              <figure class="card-banner">
-                <img src="./assets/images/project-5.png" class="w-100"
-                  alt="On a dark liver background, Airport luggage car carrying a luggage.">
-              </figure>
-
-              <div class="card-content">
-                <h3 class="h4 card-title">Coming Soon — Project 05</h3>
-
-                <time class="publish-date" datetime="2022-04">April 2022</time>
-              </div>
-
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="project-card">
-
-              <figure class="card-banner">
-                <img src="./assets/images/project-6.png" class="w-100"
-                  alt="On a yellow background, a digital watch and a glass.">
-              </figure>
-
-              <div class="card-content">
-                <h3 class="h4 card-title">Coming Soon — Project 06</h3>
-
-                <time class="publish-date" datetime="2022-04">April 2022</time>
-              </div>
-
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="project-card">
-
-              <figure class="card-banner">
-                <img src="./assets/images/project-7.png" class="w-100"
-                  alt="A fujifilm instant camera on a dark electric blue background.">
-              </figure>
-
-              <div class="card-content">
-                <h3 class="h4 card-title">Coming Soon — Project 07</h3>
-
-                <time class="publish-date" datetime="2022-04">April 2022</time>
-              </div>
-
-            </a>
-          </li>
-
-          <li>
-            <button class="load-more">Load more work</button>
-          </li>
-
-        </ul>
-
-      </section>
-
-
-
-
-
-      <!-- 
-        - #CONTACT
-      -->
-
-      <section class="contact" id="contact">
-
-        <div class="contact-content section-content">
-
-          <p class="section-subtitle">Contact</p>
-
-          <h2 class="h3 section-title">Let's Work Together — Drop Me a Message</h2>
-
-          <p class="section-text">
-            Get in touch and let me know how i can help. Fill out the form and i’ll be in touch as soon as possible.
-          </p>
-
-          <ul class="contact-list">
-
-            <li class="contact-list-item">
-
-              <div class="contact-item-icon">
-                <ion-icon name="mail-outline"></ion-icon>
-              </div>
-
-              <div class="wrapper">
-                <h3 class="h4 contact-item-title">Email:</h3>
-
-                <a href="mailto:achraafoussama@gmail.com" class="contact-info">achraafoussama@gmail.com</a>
-              </div>
-
-            </li>
-
-            <li>
-              <ul class="contac-social-list">
-
-                <li>
-                  <a href="#" class="contact-social-link">
-                    <div class="tooltip">Facebook</div>
-
-                    <ion-icon name="logo-facebook"></ion-icon>
-                  </a>
-                </li>
-
-                <li>
-                  <a href="#" class="contact-social-link">
-                    <div class="tooltip">Twitter</div>
-
-                    <ion-icon name="logo-twitter"></ion-icon>
-                  </a>
-                </li>
-
-                <li>
-                  <a href="#" class="contact-social-link">
-                    <div class="tooltip">Linkedin</div>
-
-                    <ion-icon name="logo-linkedin"></ion-icon>
-                  </a>
-                </li>
-
-                <li>
-                  <a href="#" class="contact-social-link">
-                    <div class="tooltip">Youtube</div>
-
-                    <ion-icon name="logo-youtube"></ion-icon>
-                  </a>
-                </li>
-
+            <span class="work-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="work-body">
+            <div class="work-body-inner">
+              <p>Worked closely with business stakeholders to gather and document requirements, translating operational needs into functional specifications for development and reporting teams.</p>
+              <ul class="work-highlights">
+                <li>Conducted requirements workshops across operations and finance</li>
+                <li>Designed and maintained Power BI dashboards tracking key performance indicators</li>
+                <li>Documented AS-IS and TO-BE processes using BPMN notation</li>
+                <li>Supported UAT cycles and coordinated feedback between business users and IT</li>
               </ul>
-            </li>
+            </div>
+          </div>
+        </li>
 
-          </ul>
+        <li class="work-item">
+          <button class="work-toggle" aria-expanded="false">
+            <div>
+              <span class="work-title">SAP Fiori Implementation Support</span>
+              <div class="work-sub">
+                <span>2022 – 2023</span>
+                <span class="work-tag">Functional Analyst</span>
+              </div>
+            </div>
+            <span class="work-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="work-body">
+            <div class="work-body-inner">
+              <p>Acted as the bridge between end users and the technical team during a SAP Fiori rollout — capturing pain points, mapping workflows, and validating that the solution matched real business needs.</p>
+              <ul class="work-highlights">
+                <li>Gathered and prioritized user stories from department leads and frontline staff</li>
+                <li>Mapped current workflows in Excel and BPMN to identify gaps and redundancies</li>
+                <li>Assisted in configuration testing and prepared end-user training documentation</li>
+                <li>Managed stakeholder communications and tracked open issues through delivery</li>
+              </ul>
+            </div>
+          </div>
+        </li>
 
+        <li class="work-item">
+          <button class="work-toggle" aria-expanded="false">
+            <div>
+              <span class="work-title">Data Analysis &amp; Reporting — Internship</span>
+              <div class="work-sub">
+                <span>2021 – 2022</span>
+                <span class="work-tag">Data Analysis</span>
+              </div>
+            </div>
+            <span class="work-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="work-body">
+            <div class="work-body-inner">
+              <p>Built reporting tools and cleaned datasets to support decision-making across multiple departments, working primarily in Excel and SQL.</p>
+              <ul class="work-highlights">
+                <li>Automated monthly reporting workflows using Excel and SQL queries</li>
+                <li>Cleaned and validated datasets to ensure consistency across reporting outputs</li>
+                <li>Prepared management-ready summaries and visualizations for weekly reviews</li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <p class="section-label">Projects</p>
+      <div class="projects-grid">
+        <div class="project-card">
+          <span class="project-label">Coming soon</span>
+          <span class="project-title">Power BI Dashboard</span>
+          <span class="project-status">In progress</span>
+        </div>
+        <div class="project-card">
+          <span class="project-label">Coming soon</span>
+          <span class="project-title">Process Model Library</span>
+          <span class="project-status">In progress</span>
+        </div>
+        <div class="project-card">
+          <span class="project-label">Coming soon</span>
+          <span class="project-title">SQL Case Study</span>
+          <span class="project-status">In progress</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <p class="section-label">About</p>
+      <div class="about-grid">
+
+        <div class="about-bio">
+          <p>I'm a business and functional analyst based in Belgium. My work sits at the intersection of business operations and data — I help teams understand what they actually need, and then figure out how to get there.</p>
+          <p>I'm drawn to the parts of a project that are easy to skip: the requirement that doesn't quite make sense until you ask twice, the process step nobody documented, the report everyone uses but nobody trusts. Those tend to be the ones worth looking at.</p>
+          <p>I work across French, Arabic, English, and Dutch — which helps in environments where context gets lost between teams.</p>
         </div>
 
-        <form action="" class="contact-form">
-
-          <div class="form-wrapper">
-
-            <label for="name" class="form-label">Name</label>
-
-            <div class="input-wrapper">
-
-              <input type="text" name="name" id="name" required placeholder="e.g John Doe" class="input-field">
-
-              <ion-icon name="person-circle"></ion-icon>
-
-            </div>
-
+        <div class="about-sidebar">
+          <div class="about-sidebar-block">
+            <p class="sidebar-heading">Skills</p>
+            <ul class="skill-list">
+              <li>Power BI</li>
+              <li>SQL</li>
+              <li>Excel</li>
+              <li>BPMN</li>
+              <li>SAP Fiori</li>
+              <li>Requirements gathering</li>
+              <li>Stakeholder management</li>
+            </ul>
           </div>
-
-          <div class="form-wrapper">
-
-            <label for="email" class="form-label">Email</label>
-
-            <div class="input-wrapper">
-
-              <input type="email" name="email" id="email" required placeholder="e.g johndoe@mail.com"
-                class="input-field">
-
-              <ion-icon name="mail"></ion-icon>
-
-            </div>
-
+          <div class="about-sidebar-block">
+            <p class="sidebar-heading">Languages</p>
+            <ul class="lang-list">
+              <li>French <span>Native</span></li>
+              <li>Arabic <span>Native</span></li>
+              <li>English <span>Fluent</span></li>
+              <li>Dutch <span>Professional</span></li>
+            </ul>
           </div>
+        </div>
 
-          <div class="form-wrapper">
+      </div>
+    </section>
 
-            <label for="phone" class="form-label">Phone</label>
-
-            <div class="input-wrapper">
-
-              <input type="tel" name="phone" id="phone" required placeholder="Phone Number" class="input-field">
-
-              <ion-icon name="call"></ion-icon>
-
-            </div>
-
-          </div>
-
-          <div class="form-wrapper">
-
-            <label for="message" class="form-label">Message</label>
-
-            <div class="input-wrapper">
-
-              <textarea name="message" id="message" required placeholder="Write message..."
-                class="input-field"></textarea>
-
-              <ion-icon name="chatbubbles"></ion-icon>
-
-            </div>
-
-          </div>
-
-          <button type="submit" class="btn btn-primary">Send</button>
-
-        </form>
-
-      </section>
-
-    </article>
   </main>
 
-
-
-
-
-  <!-- 
-    - #FOOTER
-  -->
-
-  <footer class="footer">
-    <div class="container">
-
-      <p class="h1 logo">
-        <a href="#">
-          Sum<span>.</span>
-        </a>
-      </p>
-
-
-    </div>
+  <footer>
+    <span class="footer-name">Oussama Achraf</span>
+    <ul class="footer-links">
+      <li><a href="mailto:achraafoussama@gmail.com">Email</a></li>
+      <li><a href="#">LinkedIn</a></li>
+    </ul>
   </footer>
 
+  <script>
+    const items = document.querySelectorAll('.work-item');
 
+    items.forEach(item => {
+      const btn = item.querySelector('.work-toggle');
+      const body = item.querySelector('.work-body');
+      const inner = item.querySelector('.work-body-inner');
 
+      btn.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
 
+        // close all
+        items.forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.work-toggle').setAttribute('aria-expanded', 'false');
+          i.querySelector('.work-body').style.maxHeight = '0';
+        });
 
-  <!-- 
-    - #GO TO TOP
-  -->
-
-  <a href="#top" class="go-top" data-go-top title="Go to Top">
-    <ion-icon name="arrow-up"></ion-icon>
-  </a>
-
-
-
-
-
-  <!-- 
-    - custom js link
-  -->
-  <script src="./assets/js/script.js"></script>
-
-  <!-- 
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        // open clicked if it was closed
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+          body.style.maxHeight = inner.offsetHeight + 'px';
+        }
+      });
+    });
+  </script>
 
 </body>
-
 </html>
