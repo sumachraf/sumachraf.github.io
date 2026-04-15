@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Process Analysis: Roadside Assistance Coordination — Oussama Achraf</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg:       #1e1e1e;
+      --text:     #e8e8e3;
+      --muted:    #8a8a82;
+      --faint:    #4e4e49;
+      --border:   #2d2d2a;
+      --surface:  #252522;
+      --serif:    'Lora', Georgia, serif;
+      --sans:     'Inter', system-ui, sans-serif;
+    }
+
+    body.light {
+      --bg:       #fafaf8;
+      --text:     #1a1a1a;
+      --muted:    #6b6b6b;
+      --faint:    #b0b0a8;
+      --border:   #e2e2dc;
+      --surface:  #f2f2ee;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 400;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+
+    nav {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .nav-name {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--faint);
+      display: grid;
+      place-items: center;
+      padding: 0;
+      transition: color 0.2s;
+      line-height: 1;
+    }
+
+    .theme-toggle:hover { color: var(--text); }
+
+    .theme-toggle .icon-sun  { display: none; }
+    .theme-toggle .icon-moon { display: block; }
+
+    body.light .theme-toggle .icon-sun  { display: block; }
+    body.light .theme-toggle .icon-moon { display: none; }
+
+    /* ─── MAIN ────────────────────────────────────────── */
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ─── PAGE HEADER ─────────────────────────────────── */
+
+    .page-header {
+      padding-top: 80px;
+      padding-bottom: 64px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .back-link {
+      display: inline-block;
+      font-size: 0.8125rem;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 36px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--text); }
+
+    .back-link::before {
+      content: "← ";
+    }
+
+    .page-title {
+      font-family: var(--serif);
+      font-size: clamp(1.75rem, 5vw, 2.75rem);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .page-meta {
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    /* ─── DIAGRAM ─────────────────────────────────────── */
+
+    .diagram-section {
+      padding: 64px 0 0;
+    }
+
+    .diagram-section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    .diagram-link {
+      display: block;
+    }
+
+    .diagram-img {
+      width: 100%;
+      display: block;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .diagram-actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .download-link {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .download-link:hover {
+      color: var(--text);
+      border-color: var(--text);
+    }
+
+    /* ─── ANALYSIS ────────────────────────────────────── */
+
+    .analysis {
+      padding: 64px 0 96px;
+    }
+
+    .analysis-section {
+      padding: 48px 0 0;
+      border-top: 1px solid var(--border);
+      margin-top: 48px;
+    }
+
+    .analysis-section:first-child {
+      margin-top: 0;
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .analysis-h2 {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 20px;
+    }
+
+    .analysis-h3 {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+      margin-bottom: 12px;
+      margin-top: 36px;
+    }
+
+    .analysis-h3:first-of-type {
+      margin-top: 24px;
+    }
+
+    .analysis p {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 0;
+    }
+
+    .analysis p + p {
+      margin-top: 16px;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+
+    footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 36px 24px 60px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: var(--serif);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    /* ─── RESPONSIVE ──────────────────────────────────── */
+
+    @media (max-width: 640px) {
+      nav {
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-name">Sum.</a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="index.html#work">Work</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="mailto:achraafoussama@gmail.com">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" aria-label="Toggle theme">
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+
+    <header class="page-header">
+      <a href="index.html" class="back-link">Back to projects</a>
+      <h1 class="page-title">Process Analysis: Roadside Assistance Coordination</h1>
+      <p class="page-meta">BPMN diagram and written analysis</p>
+    </header>
+
+    <section class="diagram-section">
+      <p class="diagram-section-label">Diagram</p>
+      <a href="assets/EBTS_process_final.png" target="_blank" rel="noopener" class="diagram-link">
+        <img src="assets/EBTS_process_final.png" alt="BPMN diagram of the roadside assistance coordination process" class="diagram-img">
+      </a>
+      <div class="diagram-actions">
+        <a href="assets/EBTS_process_final.png" download class="download-link">Download diagram</a>
+      </div>
+    </section>
+
+    <article class="analysis">
+
+      <div class="analysis-section">
+        <h2 class="analysis-h2">Context</h2>
+        <p>This analysis documents the breakdown assistance coordination process as observed during my time as a Customer Support Officer at a roadside assistance operator serving enterprise clients across Europe, Morocco, and in some cases China. The process covers the full lifecycle of an assistance request: from the initial call through payment validation, provider dispatch, and case closure.</p>
+        <p>Operators work in a fast-paced, multilingual environment, handling multiple cases simultaneously and coordinating in real time between callers and a network of external service providers. Each client contract defines its own procedure, so while the core logic is consistent, operators must adapt continuously to contract-specific rules.</p>
+        <p>My observations skew toward weekend and out-of-hours operations, which is when I worked most of my shifts. Some of what follows reflects patterns that are more visible outside standard business hours than during the week.</p>
+        <p>The diagram represents the main coordination flow, anonymised and generalised to reflect the common pattern across contract types.</p>
+      </div>
+
+      <div class="analysis-section">
+        <h2 class="analysis-h2">How the process works</h2>
+        <p>A call comes in from a customer, a driver, or occasionally a home dealer. Before anything else can happen, the operator validates a Guarantee of Payment, confirming the customer is covered under a known contract. This is always a manual lookup. Once payment is confirmed, the operator collects the caller's details, vehicle information, a description of the problem, and the exact location. A provider is then identified from the relevant network and dispatched. The operator communicates the ETA to the customer and driver by SMS, and the case remains open until completion details are received and logged.</p>
+        <p>When the GOP cannot be validated immediately, a fallback chain begins: the operator tries to reach a home dealer who can vouch for the customer, then asks about a DKV card, and as a last resort a credit card (which is exceptional and frequently refused by providers). If none of these options work, no assistance can be provided.</p>
+      </div>
+
+      <div class="analysis-section">
+        <h2 class="analysis-h2">Observations</h2>
+
+        <h3 class="analysis-h3">Provider contact data creates repeated manual work</h3>
+        <p>The provider database contains multiple email addresses per entry, but the data is poorly maintained. Contacts are often outdated, some belong to people who have long since left the company, and dedicated out-of-hours email addresses are frequently missing. In practice, operators end up asking for a contact email on most calls and entering it manually each time. A mechanism exists to report incorrect entries to the network team (who are responsive when contacted), but few operators use it consistently. The same corrections never get made permanently, and the manual workaround repeats indefinitely.</p>
+
+        <h3 class="analysis-h3">Out-of-hours workshop duty is tracked through a shared email</h3>
+        <p>During out-of-hours periods, knowing which workshop has duty that week is essential, particularly when multiple workshops cover the same area and rotate responsibility. This information is maintained in what operators call "the list": a template email that gets modified and resent whenever something changes. Anyone who needs to know which workshop has duty consults their inbox.</p>
+        <p>The problem is that the list lives in the email client, which is a separate tool from the case handling system. Operators (particularly newer ones) do not always have the reflex to check it, and there is no designated person responsible for maintaining it. Updates happen out of individual initiative rather than any defined process. In rare but real cases, this has led to customers being sent to the wrong workshop.</p>
+
+        <h3 class="analysis-h3">Case closure depends too heavily on provider initiative</h3>
+        <p>Once a job is completed, the case can be closed through three channels: the provider calls back with details, submits a form or efeedback online, or the operator follows up directly. The first two are unreliable in practice, making follow-up the default for a significant portion of cases.</p>
+        <p>Follow-up is structurally difficult. Calling a driver days after a job, or contacting a workshop on a weekend, produces poor results. The driver may be resting, the workshop unreachable, and the out-of-hours fitter unaware of what happened. New operators, still building judgment, sometimes contact the same provider multiple times for the same case, which generates friction with workshops. A minor financial incentive exists for providers who close cases promptly, but it has not been enough to make self-closure consistent.</p>
+
+        <h3 class="analysis-h3">Some client-defined protocols create unnecessary waiting time for customers</h3>
+        <p>Procedures are set per client contract and operators follow them without deviation. Two contracts illustrate a meaningful difference in how out-of-hours dispatch is handled. Under one, the operator calls the out-of-hours fitter once the customer is 45 minutes away from the workshop. The fitter is already en route or ready on arrival, and if they arrive before the customer, waiting time is simply billed. Under another, the customer must physically be at the workshop before the operator is authorised to contact the fitter, who may then give an ETA of an hour or more. The customer has already made the journey and now waits again. For loads where temperature control is critical and time directly affects product integrity, this sequence has real consequences. The protocol may exist for contractual or liability reasons, but the operational cost is visible.</p>
+
+        <h3 class="analysis-h3">Provider rankings do not reflect out-of-hours availability</h3>
+        <p>For certain contracts, operators must contact providers in a strict prescribed order based on a ranking system. The ranking appears to reflect general performance without distinguishing between standard and out-of-hours availability. Some providers who are responsive during the week are consistently unreachable on weekends. The obligation to attempt contact in order means operators must call, wait, receive no answer, and reject before moving to the next provider. Operators who have built up experience recognise these patterns and know which providers to expect nothing from at certain hours. Operators who are newer do not, and follow the order as prescribed. In time-sensitive situations, the cumulative delay across multiple failed attempts is not negligible.</p>
+      </div>
+
+      <div class="analysis-section">
+        <h2 class="analysis-h2">Recommendations</h2>
+
+        <h3 class="analysis-h3">Lower the barrier for reporting provider data issues</h3>
+        <p>The current process asks operators to send a separate email to flag an incorrect contact. That is one step too many for something that happens frequently under call pressure. A simple in-system flag (something that takes one click during or after a call) would make reporting habitual rather than optional. For out-of-hours contacts specifically, a dedicated field distinguishing main from OOH email addresses would reflect how providers actually operate and reduce manual lookups over time.</p>
+
+        <h3 class="analysis-h3">Give "the list" a proper home</h3>
+        <p>The workshop duty information that currently lives in a shared email thread belongs in the case handling system, or at minimum in a shared document that is visible without switching tools. Whoever is handling a case should be able to see which workshop has duty without consulting their inbox. This would eliminate the tool-switching gap that causes operators to miss updates, and make maintenance easier to assign and track.</p>
+
+        <h3 class="analysis-h3">Define boundaries for case closure follow-up</h3>
+        <p>Follow-up should have clear rules: which case types warrant a direct call versus a reminder message, how many contact attempts are appropriate before administrative closure, and what hours are off-limits. The goal is not to eliminate follow-up but to make it deliberate rather than reactive. Weekend calls on completed jobs should be the exception, not a default response to low call volume.</p>
+
+        <h3 class="analysis-h3">Raise the OOH dispatch sequencing with the relevant client</h3>
+        <p>The protocol that requires a customer to arrive before the fitter is contacted is worth revisiting in dialogue with the client. The conversation would not be about overriding their procedure but about presenting the operational picture (how often customers wait, what the consequences are for time-sensitive loads) and exploring whether the sequencing could be adjusted while preserving whatever the original protocol was designed to protect.</p>
+
+        <h3 class="analysis-h3">Factor OOH availability into provider rankings</h3>
+        <p>The ranking system that determines call order should distinguish between general availability and out-of-hours availability. A provider that reliably takes jobs during the week but never answers on weekends should not appear at the top of the list for a Saturday night call. Incorporating response rate data by time period into the ranking logic would reduce failed contact attempts and shorten the time between a case being opened and a provider being confirmed.</p>
+      </div>
+
+    </article>
+
+  </main>
+
+  <footer>
+    <span class="footer-name">Oussama Achraf</span>
+    <ul class="footer-links">
+      <li><a href="mailto:achraafoussama@gmail.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/oussama-achraf/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    const body = document.body;
+    const themeBtn = document.querySelector('.theme-toggle');
+
+    if (localStorage.getItem('theme') === 'light') {
+      body.classList.add('light');
+    }
+
+    themeBtn.addEventListener('click', () => {
+      body.classList.toggle('light');
+      localStorage.setItem('theme', body.classList.contains('light') ? 'light' : 'dark');
+    });
+  </script>
+
+</body>
+</html>
