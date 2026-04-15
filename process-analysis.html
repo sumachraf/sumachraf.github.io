@@ -17,23 +17,23 @@
     }
 
     :root {
-      --bg:       #1e1e1e;
-      --text:     #e8e8e3;
-      --muted:    #8a8a82;
-      --faint:    #4e4e49;
-      --border:   #2d2d2a;
-      --surface:  #252522;
-      --serif:    'Lora', Georgia, serif;
-      --sans:     'Inter', system-ui, sans-serif;
-    }
-
-    body.light {
       --bg:       #fafaf8;
       --text:     #1a1a1a;
       --muted:    #6b6b6b;
       --faint:    #b0b0a8;
       --border:   #e2e2dc;
       --surface:  #f2f2ee;
+      --serif:    'Lora', Georgia, serif;
+      --sans:     'Inter', system-ui, sans-serif;
+    }
+
+    body.dark {
+      --bg:       #1e1e1e;
+      --text:     #e8e8e3;
+      --muted:    #8a8a82;
+      --faint:    #4e4e49;
+      --border:   #2d2d2a;
+      --surface:  #252522;
     }
 
     html {
@@ -105,11 +105,11 @@
 
     .theme-toggle:hover { color: var(--text); }
 
-    .theme-toggle .icon-sun  { display: none; }
-    .theme-toggle .icon-moon { display: block; }
+    .theme-toggle .icon-sun  { display: block; }
+    .theme-toggle .icon-moon { display: none; }
 
-    body.light .theme-toggle .icon-sun  { display: block; }
-    body.light .theme-toggle .icon-moon { display: none; }
+    body.dark .theme-toggle .icon-sun  { display: none; }
+    body.dark .theme-toggle .icon-moon { display: block; }
 
     /* ─── MAIN ────────────────────────────────────────── */
 
@@ -351,7 +351,7 @@
 
       <div class="analysis-section">
         <h2 class="analysis-h2">Context</h2>
-        <p>This analysis documents the breakdown assistance coordination process as observed during my time as a Customer Support Officer at a roadside assistance operator serving enterprise clients across Europe, Morocco, and in some cases China. The process covers the full lifecycle of an assistance request: from the initial call through payment validation, provider dispatch, and case closure.</p>
+        <p>This analysis documents the breakdown assistance coordination process as observed during my time as a Customer Support Officer at a roadside assistance operator serving enterprise clients across Europe. The process covers the full lifecycle of an assistance request: from the initial call through payment validation, provider dispatch, and case closure.</p>
         <p>Operators work in a fast-paced, multilingual environment, handling multiple cases simultaneously and coordinating in real time between callers and a network of external service providers. Each client contract defines its own procedure, so while the core logic is consistent, operators must adapt continuously to contract-specific rules.</p>
         <p>My observations skew toward weekend and out-of-hours operations, which is when I worked most of my shifts. Some of what follows reflects patterns that are more visible outside standard business hours than during the week.</p>
         <p>The diagram represents the main coordination flow, anonymised and generalised to reflect the common pattern across contract types.</p>
@@ -419,13 +419,13 @@
     const body = document.body;
     const themeBtn = document.querySelector('.theme-toggle');
 
-    if (localStorage.getItem('theme') === 'light') {
-      body.classList.add('light');
+    if (localStorage.getItem('theme') === 'dark') {
+      body.classList.add('dark');
     }
 
     themeBtn.addEventListener('click', () => {
-      body.classList.toggle('light');
-      localStorage.setItem('theme', body.classList.contains('light') ? 'light' : 'dark');
+      body.classList.toggle('dark');
+      localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
     });
   </script>
 
