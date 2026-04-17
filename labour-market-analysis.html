@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belgium Labour Market Analysis — Oussama Achraf</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #fafaf8;
+  --text: #1a1a1a;
+  --muted: #6b6b6b;
+  --faint: #b0b0a8;
+  --border: #e2e2dc;
+  --surface: #f2f2ee;
+  --serif: 'Lora', Georgia, serif;
+  --sans: 'Inter', system-ui, sans-serif;
+}
+
+body.dark {
+  --bg: #1e1e1e;
+  --text: #e8e8e3;
+  --muted: #8a8a82;
+  --faint: #4e4e49;
+  --border: #2d2d2a;
+  --surface: #252522;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* ─── NAV ─────────────────────────────────────────── */
+nav {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 24px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.nav-name {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 28px;
+}
+
+.nav-links a {
+  font-size: 0.875rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--text); }
+
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--faint);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.theme-toggle:hover { color: var(--text); }
+.theme-toggle .icon-sun { display: block; }
+.theme-toggle .icon-moon { display: none; }
+body.dark .theme-toggle .icon-sun { display: none; }
+body.dark .theme-toggle .icon-moon { display: block; }
+
+/* ─── MAIN ────────────────────────────────────────── */
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ─── PAGE HEADER ─────────────────────────────────── */
+.page-header {
+  padding-top: 80px;
+  padding-bottom: 64px;
+  border-bottom: 1px solid var(--border);
+}
+
+.back-link {
+  display: inline-block;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  text-decoration: none;
+  margin-bottom: 36px;
+  transition: color 0.2s;
+}
+
+.back-link:hover { color: var(--text); }
+.back-link::before { content: "← "; }
+
+.page-title {
+  font-family: var(--serif);
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.page-meta {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+/* ─── DASHBOARD ───────────────────────────────────── */
+.dashboard-section {
+  padding: 64px 0 0;
+}
+
+.dashboard-embed {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  display: block;
+}
+
+.dashboard-caption {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+.dashboard-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 20px;
+}
+
+.download-link {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.download-link:hover {
+  color: var(--text);
+  border-color: var(--text);
+}
+
+/* ─── STAT STRIP ──────────────────────────────────── */
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-top: 48px;
+  overflow: hidden;
+}
+
+.stat-item {
+  background: var(--bg);
+  padding: 24px 20px;
+}
+
+.stat-value {
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-label {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* ─── ANALYSIS ────────────────────────────────────── */
+.analysis {
+  padding: 64px 0 96px;
+}
+
+.analysis-section {
+  padding: 48px 0 0;
+  border-top: 1px solid var(--border);
+  margin-top: 48px;
+}
+
+.analysis-section:first-child {
+  margin-top: 0;
+  border-top: none;
+  padding-top: 0;
+}
+
+.analysis-h2 {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: 20px;
+}
+
+.analysis-h3 {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 12px;
+  margin-top: 36px;
+}
+
+.analysis-h3:first-of-type { margin-top: 24px; }
+
+.analysis p {
+  font-size: 0.9375rem;
+  color: var(--muted);
+  line-height: 1.85;
+  margin-bottom: 0;
+}
+
+.analysis p + p { margin-top: 16px; }
+
+/* ─── FINDINGS LIST ───────────────────────────────── */
+.findings-list {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.findings-list li {
+  font-size: 0.9375rem;
+  color: var(--muted);
+  line-height: 1.85;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.findings-list li:last-child { border-bottom: none; }
+
+.finding-number {
+  font-family: var(--serif);
+  font-size: 0.8125rem;
+  color: var(--faint);
+  flex-shrink: 0;
+  width: 20px;
+}
+
+/* ─── SOURCE LIST ─────────────────────────────────── */
+.source-list {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.source-list li {
+  font-size: 0.875rem;
+  color: var(--muted);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.6;
+}
+
+.source-list li:last-child { border-bottom: none; }
+
+.source-list a {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.source-list a:hover {
+  color: var(--text);
+  border-color: var(--text);
+}
+
+/* ─── FOOTER ──────────────────────────────────────── */
+footer {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 36px 24px 60px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-name {
+  font-family: var(--serif);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.footer-links a {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--text); }
+
+/* ─── RESPONSIVE ──────────────────────────────────── */
+@media (max-width: 640px) {
+  nav { flex-direction: column; gap: 18px; }
+  footer { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .stat-strip { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-name">Sum.</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="mailto:achraafoussama@gmail.com">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<main>
+  <header class="page-header">
+    <a href="index.html" class="back-link">Back to projects</a>
+    <h1 class="page-title">Belgium Labour Market Analysis</h1>
+    <p class="page-meta">SQL analysis and Power BI dashboard</p>
+  </header>
+
+  <section class="dashboard-section">
+    <img src="assets/images/belgium_labour_market_dashboard.png" alt="Power BI dashboard showing Belgium labour market analysis" class="dashboard-embed">
+    <p class="dashboard-caption">Four-panel dashboard — employment gap by origin, European ranking, education effect by province, headline KPI</p>
+    <div class="dashboard-actions">
+      <a href="https://github.com/sumachraf/belgium-labour-market-analysis/blob/main/belgium_labour_market.pdf" target="_blank" rel="noopener" class="download-link">Download dashboard (PDF)</a>
+      <a href="https://github.com/sumachraf/belgium-labour-market-analysis/blob/main/belgium_labour_market_queries.sql" target="_blank" rel="noopener" class="download-link">View SQL queries</a>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat-item">
+        <div class="stat-value">15 pp</div>
+        <div class="stat-label">Employment gap between native-born and non-EU born workers in Belgium (2024)</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">2nd</div>
+        <div class="stat-label">Belgium's rank in Europe for the largest native vs non-EU born employment gap</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">530k</div>
+        <div class="stat-label">Additional jobs Belgium needs to meet its 80% employment target by 2029</div>
+      </div>
+    </div>
+  </section>
+
+  <article class="analysis">
+    <div class="analysis-section">
+      <h2 class="analysis-h2">Context</h2>
+      <p>Belgium has set itself a target of 80% employment by 2029, requiring approximately 530,000 additional employed people aged 20–64. At 72.8% in 2025, the country is not on track. According to projections from the Federal Planning Bureau and industry analysis, Belgium may not reach this target before 2037 without significant policy intervention.</p>
+      <p>This project uses open data from Eurostat and Statbel to examine one of the structural barriers most frequently cited in the literature: the persistent employment gap between native-born workers and workers of non-EU origin. The question is not simply whether a gap exists — it does, and it is well-documented — but how large it is relative to Europe, how it has evolved over time, and what role education plays in narrowing or sustaining it.</p>
+      <p>The analysis draws on four datasets: Eurostat employment rates by country of birth (2015–2024), Eurostat employment rates by migration status, and Statbel Labour Force Survey data on employment and unemployment by education level and Belgian province.</p>
+    </div>
+
+    <div class="analysis-section">
+      <h2 class="analysis-h2">Findings</h2>
+      <ul class="findings-list">
+        <li>
+          <span class="finding-number">01</span>
+          <span>Non-EU born workers in Belgium have had an employment rate consistently 15–21 percentage points lower than native-born workers since 2015. The gap narrowed from 20.8 pp in 2015–2016 to 17.8 pp in 2018, widened again to 20.3 pp during the COVID year of 2020, and stood at 15 pp in 2024. There is no sustained trend of improvement.</span>
+        </li>
+        <li>
+          <span class="finding-number">02</span>
+          <span>Belgium ranks 2nd in Europe for the largest employment gap between native-born and non-EU born workers in 2024, behind only the Netherlands (16.5 pp). France, Germany and other neighbouring countries show significantly smaller gaps.</span>
+        </li>
+        <li>
+          <span class="finding-number">03</span>
+          <span>Belgium's native-born employment rate (74.8% in 2024) sits below the EU27 average and below all direct neighbours — Netherlands (85.9%), Germany (84.1%), France (76.8%). This suggests a structural labour market challenge that extends beyond the origin gap alone.</span>
+        </li>
+        <li>
+          <span class="finding-number">04</span>
+          <span>Education has a large effect on employment across all Belgian provinces. The difference between no/low education and tertiary education is between 55 and 67 percentage points depending on the province. However, high-education employment rates are relatively uniform (82–88%) across provinces, while low-education rates vary significantly (19–30%). The gap is driven primarily by how poorly low-educated workers fare rather than how well high-educated workers do.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="analysis-section">
+      <h2 class="analysis-h2">What the data doesn't show — and why it matters</h2>
+      <p>The central limitation of this analysis is that no publicly available dataset cross-tabulates employment rate by both origin and education level for Belgium specifically. Statbel published an exploratory analysis on this in 2023 showing that the employment gap persists even among highly educated non-EU origin workers, but the underlying data is not available for independent download.</p>
+      <p>This gap in public data availability is itself an analytical observation. Belgium's federal statistics office has produced findings it cannot fully support with open data — which limits independent replication, further research, and evidence-based policy design. For a country with a stated employment target and an explicit sub-target for non-EU born workers (58.3% by 2030, per the National Reform Programme), the absence of granular accessible data is a constraint worth noting.</p>
+      <p>What the available data does support is the framing: education alone is unlikely to close a gap of 15 percentage points that has persisted for a decade. The academic literature on labour market discrimination in Belgium (see sources below) identifies credential recognition, discrimination in hiring, and social capital differences as mechanisms that education does not automatically address. The data in this project quantifies the problem; the explanation for its persistence requires sources that go beyond what Eurostat and Statbel currently publish openly.</p>
+    </div>
+
+    <div class="analysis-section">
+      <h2 class="analysis-h2">Methodology</h2>
+      <p>Data was downloaded from Eurostat's Labour Force Survey database and Statbel's High Value Dataset open data portal. Eurostat files were downloaded in TSV format and reshaped from wide to long format using Python before import. All four datasets were imported into SQLite via DB Browser for SQLite.</p>
+      <p>Five SQL queries were written to answer specific analytical questions: the Belgian employment gap over time, an explicit year-by-year gap calculation, a European country ranking by gap size, the education effect by Belgian province, and a Belgium-vs-neighbours comparison. The Power BI dashboard was built on the same datasets, using a custom theme reflecting the Belgian national colour palette.</p>
+      <p>All queries and the dashboard export are available in the project repository.</p>
+    </div>
+
+    <div class="analysis-section">
+      <h2 class="analysis-h2">Sources</h2>
+      <ul class="source-list">
+        <li>Statbel — <a href="https://statbel.fgov.be/en/themes/work-training/labour-market/employment-and-unemployment" target="_blank" rel="noopener">Employment and unemployment (Labour Force Survey)</a> — official source for Belgium's 80% employment target and current rate</li>
+        <li>Statbel — <a href="https://statbel.fgov.be/en/news/situation-labour-market-according-nationality-origin" target="_blank" rel="noopener">Situation on the labour market according to the nationality of origin</a> — exploratory analysis of employment outcomes by origin group</li>
+        <li>Eurostat — <a href="https://ec.europa.eu/eurostat/databrowser/view/LFSA_ERGACOB/default/table" target="_blank" rel="noopener">Employment rates by country of birth (lfsa_ergacob)</a></li>
+        <li>Eurostat — <a href="https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Foreign-born_people_and_their_descendants_-_labour_market_indicators" target="_blank" rel="noopener">Foreign-born people and their descendants — labour market indicators</a></li>
+        <li>indicators.be — <a href="https://indicators.be/en/i/G08_EMP/Employment_(i42)" target="_blank" rel="noopener">Employment (i42)</a> — Federal government source confirming sub-targets for non-EU born workers</li>
+        <li>Agoria — <a href="https://www.agoria.be/en/services/expertise/talent/be-the-change/80-employment-rate-sobering-figures-and-a-growing-gap-with-europe" target="_blank" rel="noopener">80% employment rate: sobering figures and a growing gap with Europe</a></li>
+        <li>De Economist / Springer — <a href="https://link.springer.com/article/10.1007/s10645-024-09443-5" target="_blank" rel="noopener">Labour Market Disadvantages of Citizens with a Migration Background in Belgium: A Systematic Review (2024)</a></li>
+      </ul>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <span class="footer-name">Oussama Achraf</span>
+  <ul class="footer-links">
+    <li><a href="mailto:achraafoussama@gmail.com">Email</a></li>
+    <li><a href="https://www.linkedin.com/in/oussama-achraf/">LinkedIn</a></li>
+  </ul>
+</footer>
+
+<script>
+  const toggle = document.querySelector('.theme-toggle');
+  const body = document.body;
+  const saved = localStorage.getItem('theme');
+  if (saved === 'dark') body.classList.add('dark');
+  toggle.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
+  });
+</script>
+
+</body>
+</html>
